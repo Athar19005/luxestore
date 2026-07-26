@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE | Premium Fashion Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <a href="/" class="logo">LUXE</a>
+        <nav class="nav-menu">
+            <a href="/" class="nav-link">Home</a>
+            <div class="dropdown">
+                <a href="/products" class="nav-link dropdown-toggle">Shop <span class="dropdown-icon">▼</span></a>
+                <div class="dropdown-menu">
+                    <a href="/?category=Mens" class="dropdown-item">Mens</a>
+                    <a href="/?category=Womens" class="dropdown-item">Womens</a>
+                    <a href="/?category=Kids" class="dropdown-item">Kids</a>
+                    <a href="/?category=Accessories" class="dropdown-item">Accessories</a>
+                    <a href="/?category=Footwear" class="dropdown-item">Footwear</a>
+                    <a href="/?category=Outerwear" class="dropdown-item">Outerwear</a>
+                </div>
+            </div>
+            <a th:href="'#about'" class="nav-link">About</a>
+            <a th:href="'#feedback'" class="nav-link">Reviews</a>
+        </nav>
+        <div class="header-actions">
+            <span th:if="${userName != null}">
+                <span class="welcome-text" th:text="'Hi, ' + ${userName} + '!'"></span>
+                <a href="/logout" class="login-btn">Logout</a>
+            </span>
+            <span th:if="${userName == null}">
+                <a href="/login" class="login-btn">Login</a>
+            </span>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-container">
+        <div>
+            <span class="hero-badge">New Collection 2025</span>
+            <h1>Discover Your <br><span>Perfect Style</span></h1>
+            <p>Curated collection of premium fashion designed for modern living.</p>
+            <div class="hero-buttons">
+                <a th:href="'#products'" class="btn btn-primary">Shop Now</a>
+                <a th:href="'#about'" class="btn btn-outline">Our Story</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Fashion Collection">
+            <div class="hero-stat">
+                <p>500+</p>
+                <p>Happy Customers</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="marquee-bar">
+    <div class="marquee-track">
+        <span>New Arrivals</span><span class="sep">.</span>
+        <span>Free Shipping Over 2999</span><span class="sep">.</span>
+        <span>Spring Collection 2025</span><span class="sep">.</span>
+        <span>Premium Fabrics</span><span class="sep">.</span>
+        <span>New Arrivals</span><span class="sep">.</span>
+        <span>Free Shipping Over 2999</span><span class="sep">.</span>
+        <span>Spring Collection 2025</span><span class="sep">.</span>
+        <span>Premium Fabrics</span><span class="sep">.</span>
+    </div>
+</div>
+
+<section class="products" id="products">
+    <div class="products-header">
+        <h2>Featured Products</h2>
+        <p>Handpicked selection of our finest fashion</p>
+    </div>
+    <div class="categories">
+        <a href="/?category=All" th:classappend="${selectedCategory == 'All'} ? 'active'" class="category-btn">All</a>
+        <a href="/?category=Mens" th:classappend="${selectedCategory == 'Mens'} ? 'active'" class="category-btn">Mens</a>
+        <a href="/?category=Womens" th:classappend="${selectedCategory == 'Womens'} ? 'active'" class="category-btn">Womens</a>
+        <a href="/?category=Kids" th:classappend="${selectedCategory == 'Kids'} ? 'active'" class="category-btn">Kids</a>
+        <a href="/?category=Accessories" th:classappend="${selectedCategory == 'Accessories'} ? 'active'" class="category-btn">Accessories</a>
+        <a href="/?category=Footwear" th:classappend="${selectedCategory == 'Footwear'} ? 'active'" class="category-btn">Footwear</a>
+        <a href="/?category=Outerwear" th:classappend="${selectedCategory == 'Outerwear'} ? 'active'" class="category-btn">Outerwear</a>
+    </div>
+    <div class="products-grid">
+        <div th:if="${products.isEmpty()}">
+            <p style="text-align:center;color:#666;grid-column:1/-1;">No products found.</p>
+        </div>
+        <div class="product-card" th:each="product : ${products}">
+            <div class="product-image">
+                <img th:src="${product.imageUrl}" th:alt="${product.name}">
+                <button class="add-btn">+</button>
+            </div>
+            <div class="product-rating">
+                <span class="star">★★★★★</span>
+                <span class="rating-value" th:text="${product.rating}"></span>
+            </div>
+            <p class="product-name" th:text="${product.name}"></p>
+            <p class="product-desc" th:text="${product.description}"></p>
+            <p class="product-price" th:text="'Rs.' + ${product.price}"></p>
+        </div>
+    </div>
+</section>
+
+<section class="about" id="about">
+    <div class="about-container">
+        <div class="about-text">
+            <h2>About LUXE</h2>
+            <span class="about-subtitle">Premium fashion curated for you</span>
+            <p>LUXE is more than just a store — it's a celebration of refined taste and modern living.</p>
+            <p>Our mission is simple: elevate your everyday with fashion that blends functionality, beauty, and timeless elegance.</p>
+            <div class="about-stats">
+                <div class="stat"><span class="stat-number">500+</span><span class="stat-label">Happy Customers</span></div>
+                <div class="stat"><span class="stat-number">50+</span><span class="stat-label">Designers</span></div>
+                <div class="stat"><span class="stat-number">2+</span><span class="stat-label">Years</span></div>
+            </div>
+        </div>
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800" alt="About LUXE">
+        </div>
+    </div>
+</section>
+
+<section class="feedback" id="feedback">
+    <div class="feedback-container">
+        <div class="feedback-header">
+            <h2>What Our Customers Say</h2>
+            <p>Don't just take our word for it</p>
+        </div>
+        <div class="feedback-slider">
+            <div class="feedback-track" id="feedbackTrack">
+                <div class="feedback-card">
+                    <div class="feedback-rating">★★★★★</div>
+                    <p>"Absolutely stunning quality! LUXE exceeded all expectations."</p>
+                    <div class="feedback-author">
+                        <div class="author-avatar-placeholder">SK</div>
+                        <div><h4>Sarah K.</h4><span>Verified Buyer</span></div>
+                    </div>
+                </div>
+                <div class="feedback-card">
+                    <div class="feedback-rating">★★★★★</div>
+                    <p>"Fast delivery and incredible packaging. Highly recommend!"</p>
+                    <div class="feedback-author">
+                        <div class="author-avatar-placeholder">MR</div>
+                        <div><h4>Mike R.</h4><span>Verified Buyer</span></div>
+                    </div>
+                </div>
+                <div class="feedback-card">
+                    <div class="feedback-rating">★★★★★</div>
+                    <p>"Perfect for gifting! Customer service was outstanding."</p>
+                    <div class="feedback-author">
+                        <div class="author-avatar-placeholder">PS</div>
+                        <div><h4>Priya S.</h4><span>Verified Buyer</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="feedback-dots">
+                <span class="dot active" onclick="currentSlide(0)"></span>
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h3>LUXE</h3>
+            <p>Curated collection of premium fashion.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Shop</h4>
+            <ul>
+                <li><a href="/?category=Mens">Mens</a></li>
+                <li><a href="/?category=Womens">Womens</a></li>
+                <li><a href="/?category=Kids">Kids</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Help</h4>
+            <ul>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/shipping">Shipping</a></li>
+                <li><a href="/returns">Returns</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Connect</h4>
+            <ul>
+                <li><a href="/instagram">Instagram</a></li>
+                <li><a href="/twitter">Twitter</a></li>
+                <li><a href="/pinterest">Pinterest</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/main.js}"></script>
+</body>
+</html>
